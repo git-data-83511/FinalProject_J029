@@ -1,0 +1,31 @@
+/* Center the heading and add margin */
+h1 {
+    color: #003d6b; /* Dark blue for the heading */
+  }
+  
+  /* Style the navbar for blue color scheme */
+  .navbar {
+    background-color: #003d6b; /* Dark blue background */
+  }
+  
+  .navbar-brand {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #ffffff; /* White text color for the brand */
+  }
+  
+  .nav-link {
+    color: #e0f7fa; /* Light cyan color for links */
+  }
+  
+  .nav-link:hover {
+    color: #ffffff; /* White text color on hover */
+  }
+  
+  /* Custom background color for the collapse menu on mobile */
+  @media (max-width: 992px) {
+    .navbar-collapse {
+      background-color: #004ba0; /* Slightly lighter blue for mobile view */
+    }
+  }
+  
