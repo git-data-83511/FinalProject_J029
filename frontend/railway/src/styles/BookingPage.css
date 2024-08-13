@@ -1,0 +1,30 @@
+.booking-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .booking-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  .booking-container .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .booking-container .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .booking-container .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .booking-container .btn {
+    margin-top: 10px;
+  }
+  
