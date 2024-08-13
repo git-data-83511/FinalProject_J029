@@ -1,0 +1,34 @@
+.searchBar {
+  /* margin: 4rem 6rem; */
+  display: flex;
+  justify-content: center;
+  margin-top: 90px;
+  
+}
+
+.searchBox {
+  width: 500px;
+  /* margin: 20px 0 20px 0; */
+  background-color: #f8f9fa; /* Light gray background */
+}
+
+.searchList {
+  display: flex;
+  padding: 30px;
+  justify-content: center;
+}
+
+.searchList label {
+  margin: 10px;
+}
+
+
+
+
+.table th, .table td {
+  text-align: center;
+}
+
+.btn-success {
+  margin-top: 5px;
+}
