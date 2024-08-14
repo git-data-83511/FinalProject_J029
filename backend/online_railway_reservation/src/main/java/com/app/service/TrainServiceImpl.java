@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
 import com.app.custom_exceptions.ResourceNotFoundException;
+import com.app.dao.PriceDao;
 import com.app.dao.RouteDao;
 import com.app.dao.StationDao;
 import com.app.dao.TrainDao;
@@ -34,6 +35,7 @@ import com.app.dto.TravelDateBookingRespDto;
 import com.app.dto.TravelDateRespDto;
 import com.app.dto.UpdateTrainNoNameSeatsDTO;
 import com.app.dto.UpdatetrainTimeDTO;
+import com.app.entities.PricePerKm;
 import com.app.entities.Route;
 import com.app.entities.Station;
 import com.app.entities.Train;
@@ -55,6 +57,9 @@ public class TrainServiceImpl implements TrainService
 	
 	@Autowired
 	RouteDao routedao;
+	
+	@Autowired
+	PriceDao pricedao;
 	
 	@Autowired
 	TravelDateDao travelDateDao;
@@ -160,6 +165,7 @@ public class TrainServiceImpl implements TrainService
 		 
 		 List<TrainRespDto> trainrespDtolist=new ArrayList<TrainRespDto>();
 		 
+		 PricePerKm priceperkm= pricedao.findAll().get(0);
         for (int i = 0; i < routes.size(); i++) 
         {
 		   for(int j = i+1; j < routes.size(); j++)
@@ -174,6 +180,7 @@ public class TrainServiceImpl implements TrainService
 					   continue;
 				   }
 				   Long travelDateId=travelDateDao.findTravelDateId(traveldate, routes.get(i).getTrain().getId());
+				   TravelDate tr=travelDateDao.findById(travelDateId).get();
 				   //System.out.println( "i ==>"+ routes.get(i).getStation().getName());
 				   if(routes.get(i).getStation().getName().equalsIgnoreCase(source))//i->kadegaon
 				   {
@@ -201,7 +208,7 @@ public class TrainServiceImpl implements TrainService
 				   trainRespDto.setNumber(train.getNumber());
 				   trainRespDto.setName(train.getName());
 				   trainRespDto.setDate(traveldate);
-				   trainRespDto.setTotalseats(train.getTotalseats());
+				   trainRespDto.setTotalseats(tr.getTotalseats());
 				   trainRespDto.setSourcearrival(sourceroute.getArrival());
 				   trainRespDto.setDestinatiionarrival(destinationroute.getArrival());
 				   trainRespDto.setDist(destinationroute.getDistance()-sourceroute.getDistance());
@@ -210,6 +217,8 @@ public class TrainServiceImpl implements TrainService
 				   trainRespDto.setTavelDateId(travelDateId);
 				   trainRespDto.setSourceRouteid(sourceroute.getId());
 				   trainRespDto.setDestinationRouteid(destinationroute.getId());
+				   trainRespDto.setAvailableseats(tr.getTotalseats()-tr.getBookedSeats());
+				   trainRespDto.setPrice(trainRespDto.getDist()*priceperkm.getEconomyClassPrice()+trainRespDto.getDist()*priceperkm.getFirstClassPrice());
 				   trainrespDtolist.add(trainRespDto);
 				   
 			   }

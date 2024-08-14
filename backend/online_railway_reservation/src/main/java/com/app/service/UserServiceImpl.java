@@ -1,6 +1,5 @@
 package com.app.service;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -11,10 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.custom_exceptions.AuthenticationException;
 import com.app.dao.UserDao;
-import com.app.dto.AddUserDto;
 import com.app.dto.ApiResponse;
 import com.app.dto.AuthRequest;
+import com.app.dto.RegisterDto;
 import com.app.dto.UserRespDTO;
+import com.app.entities.Role;
 import com.app.entities.User;
 
 
@@ -50,14 +50,15 @@ public class UserServiceImpl implements UserService {
 		user1.setStatus("failure");
 		return user1;
 	}
-	
-	public User addUser(AddUserDto dto) {
-		User user = mapper.map(dto, User.class);
-		user.setCreatedOn(LocalDate.now());
-//		user.setRole(user.getRole().name().toUpperCase());
-		user.setPassword(user.getPassword());
-		return userDao.save(user);
+
+	@Override
+	public ApiResponse addUser(RegisterDto request) {
 		
+		User user=mapper.map(request, User.class);
+		user.setRole(Role.valueOf("CUSTOMER"));
+		
+		userDao.save(user);
+		return new ApiResponse("Registered Successfully");
 	}
 
 }

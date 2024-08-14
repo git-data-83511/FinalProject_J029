@@ -104,12 +104,12 @@ public class BookingServiceImpl implements BookingService
 		
 		if( dto.getTotalEconomySeats() > (travelDate.getTotalEconomyClassSeats()-travelDate.getTotalEconomyClassBookedSeats()))
 		{
-		   throw new ResourceNotFoundException("Economy class seats not available");	
+		   return new ApiResponse("Economy class seats not available");	
 		}
 		
 		if(dto.getTotalFirstSeats() > (travelDate.getTotalFirstClassSeats()-travelDate.getTotalFirstClassBookedSeats()))
 		{
-			 throw new ResourceNotFoundException("First class seats not available");	
+			return new ApiResponse("First class seats not available");	
 		}
 		
 		
@@ -294,7 +294,7 @@ public class BookingServiceImpl implements BookingService
 		 int result=CancellationLogic.ticketCancellation(LocalDate.now(), booking.getStartDate(),days);
 		 if(result==0)
 		 {
-			throw new ApiException("cancellation of the tickets before one day is not allowed"); 
+			return new ApiResponse("cancellation of the tickets not valid"); 
 		 }
 		
 		
@@ -365,6 +365,9 @@ public class BookingServiceImpl implements BookingService
 		for(Booking booking:bookings)
 		{
 			BookingInfoForUserRespDTO dto=mapper.map(booking, BookingInfoForUserRespDTO.class);
+	
+			dto.setTrainnumber(booking.getTrainDate().getTrain().getNumber());
+			dto.setTrainName(booking.getTrainDate().getTrain().getName());
 		   dto.setId(booking.getId());
 		   if(dto.getCancellationStatus()!=null &&  dto.getCancellationStatus()==1)
 		   {
@@ -374,7 +377,11 @@ public class BookingServiceImpl implements BookingService
 		   {
 			dto.setCancelled("NO");   
 		   }
-		   responses.add(dto);
+		   
+		   if(dto.getCancellationStatus()==0)
+		   {	   
+			   responses.add(dto);
+		   }	   
 		}
 		
 		return responses;
