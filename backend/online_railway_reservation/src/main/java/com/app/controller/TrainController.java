@@ -118,7 +118,7 @@ public class TrainController
 	 *  Error resp - SC404 , 
 	 *  error mesg -wrapped in ApiResponse DTO
 	 */
-	@GetMapping("/{source}/{destination}/{traveldate}")
+	@GetMapping("/search/dest/{source}/{destination}/{traveldate}")
 	public ResponseEntity<?> gettrain(@PathVariable String source,@PathVariable String destination,@PathVariable String traveldate ) 
 	{																										//////////////////////
 		System.out.println("in get train " + source+"  "+destination);
