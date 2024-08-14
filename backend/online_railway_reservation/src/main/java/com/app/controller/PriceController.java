@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +18,7 @@ import com.app.dto.StationReqDTO;
 import com.app.service.PriceService;
 @CrossOrigin
 @RestController
-@RequestMapping("/price")
+@RequestMapping("/price")  // /price/perkm
 public class PriceController
 {
 	@Autowired
@@ -29,7 +31,7 @@ public class PriceController
 	  
 	  /*
 	 * Description - Add price
-	 *  URL - http://host:8080/price
+	 *  URL - http://host:8080/price/add
 	 * Method - POST 
 	 * payload
  		    {
@@ -39,7 +41,7 @@ public class PriceController
 	 * response --> success massage wrapped in ApiResponse
 	 * */
 	  
-		@PostMapping
+		@PostMapping("/add")
 		public ResponseEntity<?> setPrice(@RequestBody PriceReqDTO dto) 
 		{
 		
@@ -69,7 +71,7 @@ public class PriceController
 		 * */
 		
 		
-		@PutMapping
+		@PutMapping("/update")
 		public ResponseEntity<?> updatePrice(@RequestBody PriceReqDTO dto) 
 		{
 		
@@ -84,6 +86,27 @@ public class PriceController
 						
 			}
 		}
+		
+		
+		@GetMapping("/perkm")
+		public ResponseEntity<?> priceperkm() 
+		{																										
+			
+			try
+			{
+				
+				return ResponseEntity.ok(priceService.getpriceperkm());
+			} 
+			catch (RuntimeException e) 
+			{
+				System.out.println(e);
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(e.getMessage()));
+			}
+		}
+		
+		
+		
+		
 	  
 	  
   
