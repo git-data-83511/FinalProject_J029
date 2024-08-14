@@ -47,4 +47,15 @@ public class PriceServiceImpl implements PriceService
 		return new ApiResponse("prices updated successfully");
 	}
 
+	
+	@Override
+	public PricePerKm getpriceperkm() {
+		// TODO Auto-generated method stub
+		
+		PricePerKm price= priceDao.findAll().get(0);
+		
+		
+		return price;
+	}
+
 }
