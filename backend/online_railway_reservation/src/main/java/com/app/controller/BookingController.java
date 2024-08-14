@@ -87,7 +87,7 @@ public class BookingController
 	@PostMapping("/cancel")
 	public ResponseEntity<?> cancelBooking(@RequestBody CancellationReqDto dto) 
 	{
-		
+		System.out.println(dto);
 		try
 		{
 		   return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.cancelBooking(dto));
