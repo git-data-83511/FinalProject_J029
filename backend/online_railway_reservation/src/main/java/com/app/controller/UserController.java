@@ -1,8 +1,11 @@
 package com.app.controller;
 
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.dto.AddUserDto;
 import com.app.dto.AuthRequest;
-import com.app.dto.UserRespDTO;
+import com.app.dto.RegisterDto;
+import com.app.entities.Role;
 import com.app.service.UserService;
 
 
@@ -24,9 +27,6 @@ import com.app.service.UserService;
 public class UserController {
 	@Autowired //byType
 	private UserService userService;
-	
-	@Autowired
-	private ModelMapper model;
 
 	public UserController() {
 		System.out.println("in ctor " + getClass());
@@ -52,9 +52,28 @@ public class UserController {
 		
 	}
 	
-	@PostMapping("/signup")
-	public ResponseEntity<?> addUser(@RequestBody AddUserDto dto){
-		return ResponseEntity.status(HttpStatus.CREATED).body(model.map(userService.addUser(dto),UserRespDTO.class));
+	/*
+	private String firstName;
+	
+	private String lastName;
+	
+	private String email;
+	
+	private String password;
+	
+	private String address;	
+
+	private Role role;
+	 */
+	@PostMapping("/register") //@RequestMapping(method=POST)
+	public ResponseEntity<?> registerUser(@RequestBody RegisterDto request)
+	{
+		
+		System.out.println("in signin " + request);
+		
+			return ResponseEntity.ok(
+					userService.addUser(request));
+		
 	}
 
 }
